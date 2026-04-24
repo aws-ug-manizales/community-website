@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comunidad oficial de Amazon Web Services (AWS) en Manizales, Colombia. Meetups, charlas, talleres y networking cloud.">
+    <meta name="keywords" content="AWS, Amazon Web Services, Manizales, Cloud, Meetup, User Group, Colombia, Comunidad">
+    <meta property="og:title" content="AWS User Group Manizales">
+    <meta property="og:description" content="Comunidad de entusiastas de AWS en Manizales. Aprende, comparte y crece con nosotros en el mundo de la nube.">
+    <meta property="og:image" content="images/channels4_profile.jpg">
+    <meta property="og:type" content="website">
+    <title>AWS User Group Manizales</title>
+    <link rel="icon" type="image/jpeg" href="images/channels4_profile.jpg">
+    <link rel="apple-touch-icon" href="images/channels4_profile.jpg">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__logo">
+                <img src="images/channels4_profile.jpg" alt="AWS Group Manizales Logo" class="logo-img">
+            </div>
+            <ul class="nav__menu">
+                <li><a href="#inicio" class="nav__link">Inicio</a></li>
+                <li><a href="#sobre" class="nav__link">Sobre Nosotros</a></li>
+                <li><a href="#eventos" class="nav__link">Eventos</a></li>
+                <li><a href="#integrantes" class="nav__link">Integrantes</a></li>
+                <li><a href="#proyectos" class="nav__link">Proyectos</a></li>
+                <li><a href="#documentos" class="nav__link">Recursos</a></li>
+                <li><a href="#instagram" class="nav__link"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="#contacto" class="nav__link">Contacto</a></li>
+            </ul>
+            <div class="nav__toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero__content container">
+            <div class="hero__logo-wrapper">
+                <img src="images/channels4_profile.jpg" alt="AWS User Group Manizales" class="hero__logo">
+            </div>
+            <h1 class="hero__title">AWS User Group <span>Manizales</span></h1>
+            <p class="hero__subtitle">
+                Comunidad de entusiastas de AWS en Manizales. Aprende, comparte y crece con nosotros en el mundo de la nube.
+            </p>
+            <div class="hero__buttons">
+                <a href="https://linktr.ee/awsugmanizales" target="_blank" rel="noopener noreferrer" class="btn btn--primary"><i class="fas fa-link"></i> Unirse al Grupo</a>
+                <a href="#sobre" class="btn btn--secondary">Conocer Más</a>
+            </div>
+        </div>
+        <div class="hero__bg">
+            <div class="hero__overlay"></div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="sobre" class="section section--white">
+        <div class="container">
+            <h2 class="section__title">Sobre Nosotros</h2>
+            <p class="section__subtitle">
+                Una comunidad apasionada por la nube de Amazon Web Services
+            </p>
+            <div class="about__grid">
+                <div class="about__card">
+                    <i class="fas fa-users about__icon"></i>
+                    <h3 class="about__title">Comunidad Activa</h3>
+                    <p class="about__text">
+                        Somos un grupo de profesionales, estudiantes y entusiastas que nos reunimos regularmente para compartir conocimientos sobre AWS.
+                    </p>
+                </div>
+                <div class="about__card">
+                    <i class="fas fa-graduation-cap about__icon"></i>
+                    <h3 class="about__title">Aprendizaje Continuo</h3>
+                    <p class="about__text">
+                        Organizamos charlas, talleres y sesiones prácticas para mantenernos actualizados con las últimas tecnologías de AWS.
+                    </p>
+                </div>
+                <div class="about__card">
+                    <i class="fas fa-network-wired about__icon"></i>
+                    <h3 class="about__title">Networking</h3>
+                    <p class="about__text">
+                        Conecta con profesionales de la industria, comparte experiencias y construye relaciones en el ecosistema cloud.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eventos -->
+    <section id="eventos" class="section section--gray">
+        <div class="container">
+            <h2 class="section__title">Próximos Eventos</h2>
+            <p class="section__subtitle">
+                Acompañanos en nuestras reuniones y talleres
+            </p>
+            <div class="events__grid" id="eventsGrid">
+                <div class="events__loading">
+                    <div class="loading__spinner"></div>
+                    <p>Cargando eventos de Meetup...</p>
+                </div>
+            </div>
+            <div class="events__footer">
+                <a href="https://www.meetup.com/aws-user-group-manizales/" target="_blank" rel="noopener noreferrer" class="btn btn--outline">
+                    <i class="fab fa-meetup"></i> Ver todos en Meetup
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section id="beneficios" class="section section--gray">
+        <div class="container">
+            <h2 class="section__title">Beneficios de Unirte</h2>
+            <p class="section__subtitle">
+                Lo que obtienes al ser parte de nuestra comunidad
+            </p>
+            <div class="benefits__grid">
+                <div class="benefit__item">
+                    <div class="benefit__icon-wrap"><i class="fas fa-microphone-alt"></i></div>
+                    <h3>Charlas Educativas</h3>
+                    <p>Acceso a sesiones de aprendizaje con expertos de la industria</p>
+                </div>
+                <div class="benefit__item">
+                    <div class="benefit__icon-wrap"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Talleres Prácticos</h3>
+                    <p>Laboratorios con ejercicios reales en servicios de AWS</p>
+                </div>
+                <div class="benefit__item">
+                    <div class="benefit__icon-wrap"><i class="fas fa-medal"></i></div>
+                    <h3>Preparación Certificaciones</h3>
+                    <p>Recursos y guías para preparar tus certificaciones AWS</p>
+                </div>
+                <div class="benefit__item">
+                    <div class="benefit__icon-wrap"><i class="fas fa-users"></i></div>
+                    <h3>Conexiones Profesionales</h3>
+                    <p>Conoce profesionales de la industria y encuentra oportunidades laborales</p>
+                </div>
+                <div class="benefit__item">
+                    <div class="benefit__icon-wrap"><i class="fas fa-project-diagram"></i></div>
+                    <h3>Proyectos Comunitarios</h3>
+                    <p>Participa en proyectos open source y colaborativos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrantes -->
+    <section id="integrantes" class="section section--gray">
+        <div class="container">
+            <h2 class="section__title">Nuestros Integrantes</h2>
+            <p class="section__subtitle">Las personas que hacen posible esta comunidad</p>
+            <div class="members__grid">
+
+                <a href="https://github.com/loaizajimmy" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/17736868?v=4" alt="Jimmy Alejandro Loaiza">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Jimmy Alejandro Loaiza</h3>
+                        <span class="member__role">Líder</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> loaizajimmy</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/SantiagoLoaiza" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/52549894?v=4" alt="Santiago Loaiza Giraldo">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Santiago Loaiza Giraldo</h3>
+                        <span class="member__role">Líder</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> SantiagoLoaiza</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/juan55860" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/juan55860.png?size=400" alt="juan55860">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">juan55860</h3>
+                        <span class="member__role">Líder</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> juan55860</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/cesarpalacios" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/6586832?v=4" alt="Cesar Augusto Palacios Alarcon">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Cesar Augusto Palacios Alarcon</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> cesarpalacios</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Jhsernam" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/143241234?v=4" alt="Jhsernam">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Jhsernam</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Jhsernam</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/sarroyaveu" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/274156353?v=4" alt="sarroyaveu">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">sarroyaveu</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> sarroyaveu</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Macaaa9" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/188901479?v=4" alt="Maria Angelica Castaño">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Maria Angelica Castaño</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Macaaa9</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Valnaranjos" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/206282537?v=4" alt="Valeria Naranjo">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Valeria Naranjo</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Valnaranjos</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Sebasmontoyasm" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/32084945?v=4" alt="Sebastián Montoya">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Sebastián Montoya</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Sebasmontoyasm</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Diego-col-un" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/219906389?v=4" alt="Diego Aristizábal">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Diego Aristizábal</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Diego-col-un</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/JacoboArroyave" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://avatars.githubusercontent.com/u/161059117?v=4" alt="Jacobo Arroyave">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Jacobo Arroyave</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> JacoboArroyave</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/JuanDevEng1" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/JuanDevEng1.png?size=400" alt="JuanDevEng1">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">JuanDevEng1</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> JuanDevEng1</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Caegomezda" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/Caegomezda.png?size=400" alt="Caegomezda">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Caegomezda</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Caegomezda</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/yaircamilo05" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/yaircamilo05.png?size=400" alt="yaircamilo05">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">yaircamilo05</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> yaircamilo05</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/YeisonLondo20" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/YeisonLondo20.png?size=400" alt="YeisonLondo20">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">YeisonLondo20</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> YeisonLondo20</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Davidxap" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/Davidxap.png?size=400" alt="Davidxap">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Davidxap</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Davidxap</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/JorgeO07" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/JorgeO07.png?size=400" alt="JorgeO07">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">JorgeO07</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> JorgeO07</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/juki-dev" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/juki-dev.png?size=400" alt="juki-dev">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">juki-dev</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> juki-dev</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Andres620" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/Andres620.png?size=400" alt="Andres620">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">Andres620</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> Andres620</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/bryanArroyave" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/bryanArroyave.png?size=400" alt="bryanArroyave">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">bryanArroyave</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> bryanArroyave</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/xq25" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/xq25.png?size=400" alt="xq25">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">xq25</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> xq25</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/manuelazuluagac" target="_blank" rel="noopener noreferrer" class="member__card">
+                    <div class="member__avatar">
+                        <img src="https://github.com/manuelazuluagac.png?size=400" alt="manuelazuluagac">
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">manuelazuluagac</h3>
+                        <span class="member__role">Participante Activo</span>
+                        <div class="member__links">
+                            <span class="member__github"><i class="fab fa-github"></i> manuelazuluagac</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://linktr.ee/awsugmanizales" target="_blank" rel="noopener noreferrer" class="member__card member__card--join">
+                    <div class="member__avatar">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="member__info">
+                        <h3 class="member__name">¡Únete tú!</h3>
+                        <span class="member__role">Nuevo Miembro</span>
+                        <p class="member__bio">¿Te apasiona AWS y la nube? Únete a nuestra comunidad.</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="proyectos" class="section section--white">
+        <div class="container">
+            <h2 class="section__title">Proyectos</h2>
+            <p class="section__subtitle">Iniciativas open source y colaborativas de nuestra comunidad</p>
+            <div class="projects__grid">
+
+                <div class="project__card">
+                    <div class="project__header">
+                        <div class="project__icon"><i class="fas fa-server"></i></div>
+                        <div class="project__badges">
+                            <span class="badge badge--active">Activo</span>
+                        </div>
+                    </div>
+                    <h3 class="project__title">Skorify — Backend</h3>
+                    <p class="project__desc">API y lógica de negocio del proyecto Skorify. Construido con TypeScript sobre servicios serverless de AWS, con CI/CD automatizado.</p>
+                    <div class="project__tags">
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">AWS Lambda</span>
+                        <span class="tag">API Gateway</span>
+                        <span class="tag">Serverless</span>
+                    </div>
+                    <div class="project__footer">
+                        <a href="https://github.com/aws-ug-manizales/Skorify_Backend" target="_blank" rel="noopener noreferrer" class="project__link">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project__card">
+                    <div class="project__header">
+                        <div class="project__icon"><i class="fas fa-database"></i></div>
+                        <div class="project__badges">
+                            <span class="badge badge--active">Activo</span>
+                        </div>
+                    </div>
+                    <h3 class="project__title">Skorify — Data</h3>
+                    <p class="project__desc">Capa de datos y modelos del proyecto Skorify. Gestión de esquemas, migraciones y acceso a datos con TypeScript y servicios de AWS.</p>
+                    <div class="project__tags">
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">DynamoDB</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Data</span>
+                    </div>
+                    <div class="project__footer">
+                        <a href="https://github.com/aws-ug-manizales/Skorify_Data" target="_blank" rel="noopener noreferrer" class="project__link">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project__card">
+                    <div class="project__header">
+                        <div class="project__icon"><i class="fas fa-desktop"></i></div>
+                        <div class="project__badges">
+                            <span class="badge badge--active">Activo</span>
+                        </div>
+                    </div>
+                    <h3 class="project__title">Skorify — Frontend</h3>
+                    <p class="project__desc">Interfaz de usuario del proyecto Skorify. Aplicación web moderna construida con TypeScript, conectada a los servicios cloud del grupo.</p>
+                    <div class="project__tags">
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">Frontend</span>
+                        <span class="tag">AWS S3</span>
+                        <span class="tag">CloudFront</span>
+                    </div>
+                    <div class="project__footer">
+                        <a href="https://github.com/aws-ug-manizales/Skorify_Frontend" target="_blank" rel="noopener noreferrer" class="project__link">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project__card">
+                    <div class="project__header">
+                        <div class="project__icon"><i class="fas fa-cogs"></i></div>
+                        <div class="project__badges">
+                            <span class="badge badge--active">Activo</span>
+                        </div>
+                    </div>
+                    <h3 class="project__title">Skorify — DevOps</h3>
+                    <p class="project__desc">Infraestructura, pipelines y automatización del despliegue de Skorify en AWS. Gestión de entornos, monitoring y recursos cloud.</p>
+                    <div class="project__tags">
+                        <span class="tag">DevOps</span>
+                        <span class="tag">Terraform</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">AWS CDK</span>
+                    </div>
+                    <div class="project__footer">
+                        <a href="https://github.com/aws-ug-manizales/Skorify_DevOps" target="_blank" rel="noopener noreferrer" class="project__link">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentos de Interés -->
+    <section id="documentos" class="section section--gray">
+        <div class="container">
+            <h2 class="section__title">Documentos de Interés</h2>
+            <p class="section__subtitle">Recursos, guías y materiales útiles para la comunidad</p>
+
+            <div class="shorify-doc">
+                <div class="shorify-doc__icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="shorify-doc__content">
+                    <span class="shorify-doc__badge">En Progreso</span>
+                    <h3 class="shorify-doc__title">Skorify — Requerimientos MVP</h3>
+                    <p class="shorify-doc__desc">
+                        Documento base para la definición de backlog, diseño funcional y alineación entre equipos (Frontend, Backend, Data, DevOps). Establece el comportamiento esperado del sistema desde la perspectiva del usuario y del negocio.
+                    </p>
+                    <div class="shorify-doc__tags">
+                        <span class="tag">MVP</span>
+                        <span class="tag">Requerimientos</span>
+                        <span class="tag">AWS</span>
+                    </div>
+                    <a href="https://docs.google.com/document/d/1_L02tzjomooBHLGFeniJpSI4XweRMSGNueM9wOay_fM/edit?tab=t.0#heading=h.suyp0a68ush3" target="_blank" rel="noopener noreferrer" class="btn btn--primary shorify-doc__btn">
+                        <i class="fas fa-external-link-alt"></i> Ver Documento
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta__title">¿Listo para comenzar?</h2>
+            <p class="cta__text">
+                Únete a nuestra comunidad y comienza tu viaje en la nube con AWS
+            </p>
+            <a href="#contacto" class="btn btn--primary btn--large">Unirse Ahora</a>
+        </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section id="instagram" class="section section--white">
+        <div class="container">
+            <!-- Elfsight Instagram Feed -->
+            <div class="elfsight-app-ad03f323-25e5-4674-a3b5-b1e67d07ae46" data-elfsight-app-lazy></div>
+        </div>
+    </section>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section section--gray">
+        <div class="container">
+            <h2 class="section__title">Contáctanos</h2>
+            <p class="section__subtitle">
+                ¿Tienes preguntas? Escríbenos y te responderemos pronto
+            </p>
+
+            <!-- Email destacado -->
+            <div class="contact__email-hero">
+                <a href="mailto:awsugmanizales@gmail.com" class="contact__email-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>awsugmanizales@gmail.com</span>
+                </a>
+            </div>
+
+            <!-- Grid de redes sociales -->
+            <div class="contact__social-grid">
+                <a href="https://chat.whatsapp.com/LnIZZOcyvzyGOOJlSPfihH" target="_blank" rel="noopener noreferrer" class="contact__social-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h4>WhatsApp</h4>
+                    <p>Únete a nuestra comunidad</p>
+                </a>
+                <a href="https://www.meetup.com/aws-user-group-manizales/" target="_blank" rel="noopener noreferrer" class="contact__social-card">
+                    <i class="fab fa-meetup"></i>
+                    <h4>Meetup</h4>
+                    <p>Síguenos en Meetup.com</p>
+                </a>
+                <a href="https://www.linkedin.com/company/aws-user-group-manizales" target="_blank" rel="noopener noreferrer" class="contact__social-card">
+                    <i class="fab fa-linkedin"></i>
+                    <h4>LinkedIn</h4>
+                    <p>AWS User Group Manizales</p>
+                </a>
+                <a href="https://www.instagram.com/awsug.manizales" target="_blank" rel="noopener noreferrer" class="contact__social-card">
+                    <i class="fab fa-instagram"></i>
+                    <h4>Instagram</h4>
+                    <p>@awsug.manizales</p>
+                </a>
+                <a href="https://www.youtube.com/@AWSUserGroupManizales" target="_blank" rel="noopener noreferrer" class="contact__social-card">
+                    <i class="fab fa-youtube"></i>
+                    <h4>YouTube</h4>
+                    <p>AWS User Group Manizales</p>
+                </a>
+                <a href="https://github.com/aws-ug-manizales" target="_blank" rel="noopener noreferrer" class="contact__social-card">
+                    <i class="fab fa-github"></i>
+                    <h4>GitHub</h4>
+                    <p>aws-ug-manizales</p>
+                </a>
+            </div>
+
+            <!-- Ubicación y mapa -->
+            <div class="contact__location">
+                <div class="contact__location-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Manizales, Caldas, Colombia</span>
+                </div>
+                <div class="contact__map">
+                    <iframe
+                        title="Ubicación AWS User Group Manizales"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=-75.5400%2C5.0500%2C-75.4800%2C5.0850&amp;layer=mapnik&amp;marker=5.0689%2C-75.5174"
+                        width="100%"
+                        height="250"
+                        style="border:0; border-radius:12px;"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    <img src="images/channels4_profile.jpg" alt="AWS Group Manizales" class="logo-img">
+                    <span>AWS Group Manizales</span>
+                </div>
+                <div class="footer__social">
+                    <a href="https://linktr.ee/awsugmanizales" target="_blank" rel="noopener noreferrer" class="footer__link" title="Linktree"><i class="fas fa-link"></i></a>
+                    <a href="https://chat.whatsapp.com/LnIZZOcyvzyGOOJlSPfihH" target="_blank" rel="noopener noreferrer" class="footer__link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/company/aws-user-group-manizales" target="_blank" rel="noopener noreferrer" class="footer__link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/awsug.manizales" target="_blank" rel="noopener noreferrer" class="footer__link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@AWSUserGroupManizales" target="_blank" rel="noopener noreferrer" class="footer__link" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://github.com/aws-ug-manizales" target="_blank" rel="noopener noreferrer" class="footer__link" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 AWS Group Manizales. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
