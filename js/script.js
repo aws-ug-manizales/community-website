@@ -293,6 +293,136 @@ async function loadMeetupEvents() {
 }
 
 loadMeetupEvents();
+
+// ─── GitHub Repos ─────────────────────────────────────────────────────────────
+const GITHUB_ORG = 'aws-ug-manizales';
+
+const REPO_ICON_MAP = {
+    backend:   'fa-server',
+    api:       'fa-server',
+    frontend:  'fa-desktop',
+    web:       'fa-desktop',
+    ui:        'fa-desktop',
+    data:      'fa-database',
+    db:        'fa-database',
+    devops:    'fa-cogs',
+    infra:     'fa-cogs',
+    terraform: 'fa-cogs',
+    deploy:    'fa-cogs',
+    mobile:    'fa-mobile-alt',
+    app:       'fa-mobile-alt',
+};
+
+const LANG_ICON_MAP = {
+    TypeScript:  'fa-code',
+    JavaScript:  'fa-code',
+    Python:      'fa-code',
+    Java:        'fa-code',
+    HTML:        'fa-code',
+    CSS:         'fa-code',
+    Shell:       'fa-terminal',
+    HCL:         'fa-cogs',
+};
+
+function getRepoIcon(repo) {
+    const name = (repo.name || '').toLowerCase();
+    for (const [key, icon] of Object.entries(REPO_ICON_MAP)) {
+        if (name.includes(key)) return icon;
+    }
+    return LANG_ICON_MAP[repo.language] || 'fa-code-branch';
+}
+
+function buildProjectCard(repo) {
+    const icon  = getRepoIcon(repo);
+    const badge = repo.archived
+        ? '<span class="badge badge--idea">Archivado</span>'
+        : '<span class="badge badge--active">Activo</span>';
+
+    const rawDesc = repo.description || 'Repositorio de la comunidad AWS User Group Manizales.';
+    const desc    = rawDesc.length > 160 ? rawDesc.slice(0, 160) + '\u2026' : rawDesc;
+
+    const tags = [
+        ...(Array.isArray(repo.topics) ? repo.topics.slice(0, 3) : []),
+        ...(repo.language ? [repo.language] : [])
+    ].slice(0, 4);
+
+    const tagsHtml = tags.length
+        ? `<div class="project__tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+        : '';
+
+    return `
+        <div class="project__card">
+            <div class="project__header">
+                <div class="project__icon"><i class="fas ${icon}"></i></div>
+                <div class="project__badges">${badge}</div>
+            </div>
+            <h3 class="project__title">${repo.name}</h3>
+            <p class="project__desc">${desc}</p>
+            ${tagsHtml}
+            <div class="project__footer">
+                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project__link">
+                    <i class="fab fa-github"></i> Ver en GitHub
+                </a>
+            </div>
+        </div>`;
+}
+
+async function loadGitHubRepos() {
+    const grid = document.getElementById('projectsGrid');
+    if (!grid) return;
+
+    try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 8000);
+        let res;
+        try {
+            res = await fetch(
+                `https://api.github.com/orgs/${GITHUB_ORG}/repos?type=public&sort=updated&per_page=100`,
+                { signal: controller.signal, headers: { 'Accept': 'application/vnd.github+json' } }
+            );
+        } finally {
+            clearTimeout(timer);
+        }
+        if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+        const repos = await res.json();
+
+        const filtered = repos.filter(r => !r.fork);
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `
+                <div class="events__empty">
+                    <i class="fab fa-github"></i>
+                    <h3>Sin repositorios p\u00FAblicos</h3>
+                    <p>Todav\u00EDa no hay repositorios p\u00FAblicos en la organizaci\u00F3n.</p>
+                </div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(buildProjectCard).join('');
+
+        grid.querySelectorAll('.project__card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            if (observer) observer.observe(el);
+        });
+
+    } catch (e) {
+        console.warn('[GitHub] No se pudieron cargar los repos:', e.message);
+        grid.innerHTML = `
+            <div class="events__empty">
+                <i class="fab fa-github"></i>
+                <h3>No se pudieron cargar los proyectos</h3>
+                <p>Visita nuestra organizaci\u00F3n en GitHub para ver los repositorios disponibles.</p>
+                <a href="https://github.com/${GITHUB_ORG}" target="_blank" rel="noopener noreferrer"
+                   class="btn btn--outline" style="margin-top:1.2rem">
+                    <i class="fab fa-github"></i> Ver en GitHub
+                </a>
+            </div>`;
+    }
+}
+
+loadGitHubRepos();
 // ──────────────────────────────────────────────────────────────────────────────
 
 // Formulario de contacto — envía por mailto con feedback visual
@@ -359,7 +489,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Aplicar animación a las cards
-document.querySelectorAll('.about__card, .event__card, .benefit__item, .member__card, .project__card, .docs__category, .instagram__banner').forEach(el => {
+document.querySelectorAll('.about__card, .event__card, .benefit__item, .member__card, .docs__category, .instagram__banner').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
