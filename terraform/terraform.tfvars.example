@@ -1,0 +1,10 @@
+# Copy this file to terraform.tfvars and fill in real values.
+# terraform.tfvars is gitignored — do not commit environment-specific values.
+
+# Custom domain aliases (CNAMEs) for CloudFront. Leave empty list to use
+# only the default *.cloudfront.net domain.
+domain_aliases = ["awsug.example.com"]
+
+# ACM certificate ARN in us-east-1 covering the aliases above.
+# Leave empty string to use the default CloudFront certificate.
+acm_certificate_arn = "arn:aws:acm:us-east-1:000000000000:certificate/00000000-0000-0000-0000-000000000000"

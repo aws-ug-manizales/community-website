@@ -1,10 +1,10 @@
 terraform {
-  required_version = ">= 1.0"
+  required_version = ">= 1.7"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 6.0"
     }
   }
 }
@@ -34,6 +34,25 @@ resource "aws_s3_bucket_public_access_block" "website" {
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_ownership_controls" "website" {
+  bucket = aws_s3_bucket.website.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "website" {
+  bucket = aws_s3_bucket.website.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+    bucket_key_enabled = true
+  }
+}
+
 # ---------- CloudFront OAC ----------
 resource "aws_cloudfront_origin_access_control" "website" {
   name                              = "${var.bucket_name}-oac"
@@ -44,31 +63,30 @@ resource "aws_cloudfront_origin_access_control" "website" {
 }
 
 # ---------- CloudFront Response Headers Policy ----------
-resource "aws_cloudfront_response_headers_policy" "hsts" {
-  name = "hsts-secure-policy"
+resource "aws_cloudfront_response_headers_policy" "security" {
+  name = "security-headers-policy"
 
   security_headers_config {
     strict_transport_security {
-      access_control_max_age_sec            = 63072000 # 2 años
-      include_subdomains                    = true
-      preload                               = true
-      override                              = true
+      access_control_max_age_sec = 63072000 # 2 años
+      include_subdomains         = true
+      preload                    = true
+      override                   = true
     }
     content_type_options {
       override = true
     }
     frame_options {
       frame_option = "DENY"
-      override    = true
+      override     = true
     }
     referrer_policy {
       referrer_policy = "same-origin"
       override        = true
     }
-    xss_protection {
-      protection = true
-      mode_block = true
-      override   = true
+    content_security_policy {
+      content_security_policy = "default-src 'self'; img-src 'self' https://avatars.githubusercontent.com https://github.com data:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com data:; script-src 'self'; connect-src 'self' https://api.github.com https://cors.eu.org https://api.allorigins.win https://corsproxy.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+      override                = true
     }
   }
 }
@@ -76,6 +94,7 @@ resource "aws_cloudfront_response_headers_policy" "hsts" {
 # ---------- CloudFront Distribution ----------
 resource "aws_cloudfront_distribution" "website" {
   enabled             = true
+  is_ipv6_enabled     = true
   default_root_object = "index.html"
   comment             = "AWS User Group Manizales - Static Website"
   price_class         = "PriceClass_100"
@@ -93,33 +112,30 @@ resource "aws_cloudfront_distribution" "website" {
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "S3-${aws_s3_bucket.website.id}"
     viewer_protocol_policy = "redirect-to-https"
+    compress               = true
 
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
+    # AWS-managed cache policy: CachingOptimized
+    # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
 
-    min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
-    compress    = true
-
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.hsts.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
   }
 
-  # SPA-style error handling: return index.html on 403/404
+  # Serve a real 404 page with a 404 status code (better for SEO than masking
+  # missing pages as 200 over /index.html). S3 returns 403 for missing objects
+  # behind OAC, so map both 403 and 404 to /404.html with status 404.
   custom_error_response {
-    error_code         = 403
-    response_code      = 200
-    response_page_path = "/index.html"
+    error_code            = 403
+    response_code         = 404
+    response_page_path    = "/404.html"
+    error_caching_min_ttl = 10
   }
 
   custom_error_response {
-    error_code         = 404
-    response_code      = 200
-    response_page_path = "/index.html"
+    error_code            = 404
+    response_code         = 404
+    response_page_path    = "/404.html"
+    error_caching_min_ttl = 10
   }
 
   restrictions {
@@ -144,8 +160,8 @@ resource "aws_s3_bucket_policy" "website" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid       = "AllowCloudFrontServicePrincipal"
-        Effect    = "Allow"
+        Sid    = "AllowCloudFrontServicePrincipal"
+        Effect = "Allow"
         Principal = {
           Service = "cloudfront.amazonaws.com"
         }
@@ -161,43 +177,15 @@ resource "aws_s3_bucket_policy" "website" {
   })
 }
 
-# ---------- Upload website files to S3 ----------
-locals {
-  content_types = {
-    ".html" = "text/html"
-    ".css"  = "text/css"
-    ".js"   = "application/javascript"
-    ".json" = "application/json"
-    ".png"  = "image/png"
-    ".jpg"  = "image/jpeg"
-    ".jpeg" = "image/jpeg"
-    ".gif"  = "image/gif"
-    ".svg"  = "image/svg+xml"
-    ".ico"  = "image/x-icon"
-    ".webp" = "image/webp"
-    ".avif" = "image/avif"
-    ".woff" = "font/woff"
-    ".woff2" = "font/woff2"
-    ".ttf"  = "font/ttf"
-    ".xml"  = "application/xml"
-    ".txt"  = "text/plain"
+# ---------- File upload moved to GitHub Actions ----------
+# Static assets are now synced to S3 by .github/workflows/deploy.yml.
+# The previous aws_s3_object.website_files resource is removed from state
+# without destroying the existing objects in S3 — the workflow takes over
+# their lifecycle on the next push to main.
+removed {
+  from = aws_s3_object.website_files
+
+  lifecycle {
+    destroy = false
   }
-
-  website_files = fileset("${path.module}/..", "**/*.{html,css,js,json,png,jpg,jpeg,gif,svg,ico,webp,avif,woff,woff2,ttf,xml,txt}")
-
-  # Exclude terraform and git directories
-  filtered_files = [
-    for f in local.website_files : f
-    if !startswith(f, "terraform/") && !startswith(f, ".git/") && f != ".gitignore" && f != "README.md"
-  ]
-}
-
-resource "aws_s3_object" "website_files" {
-  for_each = toset(local.filtered_files)
-
-  bucket       = aws_s3_bucket.website.id
-  key          = each.value
-  source       = "${path.module}/../${each.value}"
-  etag         = filemd5("${path.module}/../${each.value}")
-  content_type = lookup(local.content_types, regex("\\.[^.]+$", each.value), "application/octet-stream")
 }
