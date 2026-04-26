@@ -124,3 +124,51 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
             --paths "/*"
+
+  smoke-test:
+    name: Smoke test live site
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://awsug.cloud-manizales.com' }}
+    steps:
+      - name: Verifica home (status 200 y estructura)
+        run: |
+          status=$(curl -sS -o /dev/null -w "%{http_code}" \
+            --max-time 15 --retry 3 --retry-delay 5 "$SITE_URL")
+          echo "home → $status"
+          [ "$status" = "200" ] || exit 1
+
+          body=$(curl -sS --max-time 15 "$SITE_URL")
+          for needle in \
+            '<title>AWS User Group Manizales</title>' \
+            'id="integrantes"' \
+            'id="eventos"' \
+            'id="contacto"' \
+            'css/styles.css' \
+            'js/script.js'
+          do
+            if ! grep -qF "$needle" <<< "$body"; then
+              echo "::error::Falta en la home: $needle"
+              exit 1
+            fi
+          done
+          echo "estructura OK"
+
+      - name: Verifica que una ruta inexistente responde 404
+        run: |
+          url="$SITE_URL/no-existe-$(date +%s)"
+          status=$(curl -sS -o /dev/null -w "%{http_code}" \
+            --max-time 15 "$url")
+          echo "ruta inexistente → $status"
+          [ "$status" = "404" ] || exit 1
+
+      - name: Verifica que los assets críticos responden 200
+        run: |
+          for path in css/styles.css js/script.js images/channels4_profile.jpg 404.html; do
+            status=$(curl -sS -o /dev/null -w "%{http_code}" \
+              --max-time 10 "$SITE_URL/$path")
+            echo "/$path → $status"
+            [ "$status" = "200" ] || exit 1
+          done
