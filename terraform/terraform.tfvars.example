@@ -1,10 +1,16 @@
-# Copy this file to terraform.tfvars and fill in real values.
-# terraform.tfvars is gitignored — do not commit environment-specific values.
-
-# Custom domain aliases (CNAMEs) for CloudFront. Leave empty list to use
-# only the default *.cloudfront.net domain.
-domain_aliases = ["awsug.example.com"]
-
-# ACM certificate ARN in us-east-1 covering the aliases above.
-# Leave empty string to use the default CloudFront certificate.
-acm_certificate_arn = "arn:aws:acm:us-east-1:000000000000:certificate/00000000-0000-0000-0000-000000000000"
+# Normalmente NO hace falta un terraform.tfvars: el sitio tiene un solo
+# ambiente (producción) y los valores reales ya están como default en
+# variables.tf. El backend del state está en S3 (ver backend.tf), también
+# fijo.
+#
+# Este archivo solo sirve si quieres probar localmente apuntando a otro
+# dominio/certificado. Cópialo a terraform.tfvars (gitignored) y ajusta:
+#
+# domain_aliases      = ["mi-dominio-de-prueba.example.com"]
+# acm_certificate_arn = "arn:aws:acm:us-east-1:000000000000:certificate/..."
+#
+# Para usar solo el dominio *.cloudfront.net por defecto, deja la lista
+# vacía y el ARN en string vacío:
+#
+# domain_aliases      = []
+# acm_certificate_arn = ""

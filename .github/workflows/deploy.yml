@@ -74,10 +74,70 @@ jobs:
           bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
           ./actionlint -color
 
+  detect-changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      terraform: ${{ steps.filter.outputs.terraform }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            terraform:
+              - 'terraform/**'
+
+  terraform-apply:
+    name: Apply Terraform infra
+    # Solo en merge a main y solo si cambió algo bajo terraform/. El
+    # GitHub Environment `production` exige aprobación de un reviewer
+    # antes de aplicar (required reviewers: edisoncast, cesarpalacios,
+    # loaizajimmy).
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.detect-changes.outputs.terraform == 'true'
+    needs: [terraform, html, javascript, actions, detect-changes]
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      id-token: write
+      contents: read
+    concurrency:
+      group: terraform-${{ github.ref }}
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.14.6
+          terraform_wrapper: false
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_INFRA_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: terraform init
+        run: terraform init -input=false
+
+      - name: terraform plan
+        run: terraform plan -input=false -no-color -out=tfplan
+
+      - name: terraform apply
+        run: terraform apply -input=false -no-color tfplan
+
   deploy:
     name: Deploy to S3 + CloudFront
+    # `terraform-apply` puede skipearse (si no cambió terraform/). Un
+    # `needs` skipped no bloquea ni skipea el downstream; un `needs`
+    # failed sí lo skipea (correcto: no sincronizar assets si el apply de
+    # infra falló).
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [terraform, html, javascript, actions]
+    needs: [terraform, html, javascript, actions, terraform-apply]
     runs-on: ubuntu-latest
     permissions:
       id-token: write

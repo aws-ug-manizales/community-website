@@ -11,13 +11,13 @@ variable "bucket_name" {
 }
 
 variable "domain_aliases" {
-  description = "Custom domain aliases (CNAMEs) for CloudFront, e.g. [\"awsug.cloud-manizales.com\"]"
+  description = "Custom domain aliases (CNAMEs) for CloudFront. The site has a single environment, so the real value is the default; override only when testing locally."
   type        = list(string)
-  default     = []
+  default     = ["awsug.cloud-manizales.com"]
 }
 
 variable "acm_certificate_arn" {
-  description = "ACM certificate ARN in us-east-1 for CloudFront custom domains. Leave empty to use default CloudFront certificate."
+  description = "ACM certificate ARN in us-east-1 covering the aliases above. The site has a single environment, so the real value is the default. Set to \"\" to fall back to the default CloudFront certificate."
   type        = string
-  default     = ""
+  default     = "arn:aws:acm:us-east-1:746669207643:certificate/83630519-ebb5-4af8-b8dd-e23224e477a7"
 }
