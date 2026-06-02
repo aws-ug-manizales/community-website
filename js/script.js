@@ -489,7 +489,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Aplicar animación a las cards
-document.querySelectorAll('.about__card, .event__card, .benefit__item, .member__card, .docs__category, .instagram__banner').forEach(el => {
+document.querySelectorAll('.about__card, .event__card, .benefit__item, .member__card, .community__card, .docs__category, .instagram__banner').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
